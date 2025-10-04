@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
-import { LogOut, Plus, Trash2, Send, Printer } from "lucide-react";
+import { LogOut, Plus, Trash2, Send, Printer, History } from "lucide-react";
 import BillPreview from "@/components/BillPreview";
 
 export interface BillItem {
@@ -76,6 +76,35 @@ const Billing = () => {
     return items.reduce((sum, item) => sum + item.price, 0);
   };
 
+  const saveBillToLocalStorage = () => {
+    const savedBills = localStorage.getItem("savedBills");
+    const bills = savedBills ? JSON.parse(savedBills) : [];
+    
+    const currentDate = new Date();
+    const newBill = {
+      id: Date.now().toString(),
+      invoiceNumber,
+      customerName,
+      customerPhone,
+      items,
+      paymentMode,
+      total: calculateTotal(),
+      date: currentDate.toLocaleDateString('en-IN', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      }),
+      time: currentDate.toLocaleTimeString('en-IN', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+      })
+    };
+    
+    bills.unshift(newBill);
+    localStorage.setItem("savedBills", JSON.stringify(bills));
+  };
+
   const handleSendWhatsApp = () => {
     if (!customerName || !customerPhone || items.length === 0) {
       toast({
@@ -86,10 +115,17 @@ const Billing = () => {
       return;
     }
 
+    saveBillToLocalStorage();
+    
     const billText = `*BHASA MENS WEAR*\n\nInvoice: ${invoiceNumber}\nDate: ${new Date().toLocaleDateString()}\n\nCustomer: ${customerName}\n\n*Items:*\n${items.map(item => `${item.item} - ₹${item.price}`).join('\n')}\n\n*Total: ₹${calculateTotal()}*\n\nPayment Mode: ${paymentMode}\n\nThank you for shopping with us!`;
     
     const whatsappUrl = `https://wa.me/91${customerPhone}?text=${encodeURIComponent(billText)}`;
     window.open(whatsappUrl, '_blank');
+    
+    toast({
+      title: "Bill Saved",
+      description: "Bill has been saved to history",
+    });
   };
 
   const handlePrint = () => {
@@ -101,7 +137,14 @@ const Billing = () => {
       });
       return;
     }
+    
+    saveBillToLocalStorage();
     window.print();
+    
+    toast({
+      title: "Bill Saved",
+      description: "Bill has been saved to history",
+    });
   };
 
   const handleNewBill = () => {
@@ -119,10 +162,16 @@ const Billing = () => {
       <header className="bg-card border-b border-border p-4 print:hidden">
         <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold text-primary">BHASA MENS WEAR</h1>
-          <Button variant="outline" onClick={handleLogout}>
-            <LogOut className="h-4 w-4 mr-2" />
-            Logout
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={() => navigate("/past-bills")}>
+              <History className="h-4 w-4 mr-2" />
+              Past Bills
+            </Button>
+            <Button variant="outline" onClick={handleLogout}>
+              <LogOut className="h-4 w-4 mr-2" />
+              Logout
+            </Button>
+          </div>
         </div>
       </header>
 
