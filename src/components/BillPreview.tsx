@@ -35,19 +35,21 @@ const BillPreview = ({
   return (
     <Card className="p-8 bg-card print:shadow-none print:border-0" id="bill-preview">
       {/* Shop Header */}
-      <div className="text-center mb-6 space-y-3">
+      <div className="flex items-start gap-4 mb-6">
         <img 
           src={shopLogo} 
           alt="Bhasa Mens Wear Logo" 
-          className="h-24 w-24 mx-auto object-contain"
+          className="h-24 w-24 object-contain flex-shrink-0"
         />
-        <h1 className="text-3xl font-bold text-primary">BHASA MENS WEAR</h1>
-        <p className="text-sm text-muted-foreground">
-          Near Chatrapati Shivaji Maharaj Chowk
-        </p>
-        <p className="text-sm text-muted-foreground">
-          Nandura, Dist. Buldhana, Maharashtra 443404
-        </p>
+        <div className="flex-1 space-y-2 pt-2">
+          <h1 className="text-3xl font-bold text-primary">BHASA MENS WEAR</h1>
+          <p className="text-sm text-muted-foreground">
+            Near Chatrapati Shivaji Maharaj Chowk
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Nandura, Dist. Buldhana, Maharashtra 443404
+          </p>
+        </div>
       </div>
 
       <Separator className="my-4" />
