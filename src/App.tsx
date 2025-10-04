@@ -15,13 +15,13 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <BrowserRouter basename="/bhasa-bill-pro">
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/billing" element={<Billing />} />
           <Route path="/past-bills" element={<PastBills />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          {/* <Route path="*" element={<NotFound />} /> */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
