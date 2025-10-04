@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { BillItem } from "@/pages/Billing";
+import shopLogo from "@/assets/bhasa_logo.jpg";
 
 interface BillPreviewProps {
   invoiceNumber: string;
@@ -25,10 +26,21 @@ const BillPreview = ({
     year: 'numeric'
   });
 
+  const currentTime = new Date().toLocaleTimeString('en-IN', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  });
+
   return (
     <Card className="p-8 bg-card print:shadow-none print:border-0" id="bill-preview">
       {/* Shop Header */}
-      <div className="text-center mb-6 space-y-2">
+      <div className="text-center mb-6 space-y-3">
+        <img 
+          src={shopLogo} 
+          alt="Bhasa Mens Wear Logo" 
+          className="h-24 w-24 mx-auto object-contain"
+        />
         <h1 className="text-3xl font-bold text-primary">BHASA MENS WEAR</h1>
         <p className="text-sm text-muted-foreground">
           Near Chatrapati Shivaji Maharaj Chowk
@@ -47,8 +59,9 @@ const BillPreview = ({
           <p className="text-muted-foreground">{invoiceNumber || '-'}</p>
         </div>
         <div className="text-right">
-          <p className="font-semibold">Date:</p>
+          <p className="font-semibold">Date & Time:</p>
           <p className="text-muted-foreground">{currentDate}</p>
+          <p className="text-muted-foreground">{currentTime}</p>
         </div>
       </div>
 
