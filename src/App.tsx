@@ -15,7 +15,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter basename="/bhasa-bill-pro">
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/billing" element={<Billing />} />

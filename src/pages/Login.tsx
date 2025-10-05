@@ -75,9 +75,9 @@ const Login = () => {
             <Button type="submit" className="w-full">
               Login
             </Button>
-            {/* <p className="text-xs text-center text-muted-foreground mt-4">
+            <p className="text-xs text-center text-muted-foreground mt-4">
               Default credentials: admin / admin123
-            </p> */}
+            </p>
           </form>
         </CardContent>
       </Card>
